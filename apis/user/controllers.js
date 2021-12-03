@@ -21,9 +21,15 @@ exports.signup = async (req, res, next) => {
     req.body.password = hashedPassword;
 
     const newUser = await User.create(req.body);
+    // .populate('profile')
+    // console.log(newUser);
+    // req.body.owner = req.user._id;
+    // const newProfile = await Useer.Profile.create(req.body);
+    // console.log(newProfile);
+
     const token = generateToken(newUser);
 
-    res.status(201).json({ token });
+    res.status(201).json({ token, newUser });
   } catch (error) {
     next(error);
   }
@@ -34,5 +40,3 @@ exports.signin = (req, res, next) => {
   const token = generateToken(req.user);
   res.json({ token });
 };
-
-

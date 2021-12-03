@@ -10,19 +10,11 @@ const UserSchema = new mongoose.Schema({
     // unique: true,
   },
 
-  profile: { type: mongoose.Schema.Types.ObjectId, ref: "Profile" },
-  trip: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Trip",
-    },
-  ],
-  // profile:{
-  //     name:{type: String},
-  //     age:{type: Number},
-  //     image:{type:String}
-  //   //   trips:{type: String},
-  // }
+  profile: {
+    name: { type: String },
+    age: { type: Number },
+    image: { type: String },
+  },
 });
 
 module.exports = model("User", UserSchema);
