@@ -35,8 +35,17 @@ exports.signup = async (req, res, next) => {
   }
 };
 
-exports.signin = (req, res, next) => {
+exports.signin = async(req, res, next) => {
   // passport passed user through req.user
-  const token = generateToken(req.user);
+  const token = await generateToken(req.user);
   res.json({ token });
 };
+
+exports.fetchUsers=async (req,res,next)=>{
+    try {
+        const usersList = await User.find()
+        res.status(200).json(usersList)
+    } catch (error) {
+        console.log(error)
+    }
+}
