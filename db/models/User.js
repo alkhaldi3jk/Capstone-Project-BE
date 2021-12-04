@@ -15,6 +15,8 @@ const UserSchema = new mongoose.Schema({
     age: { type: Number },
     image: { type: String },
   },
+  owner: {type: mongoose.Schema.Types.ObjectId, ref:"User"}
+
 });
 
 module.exports = model("User", UserSchema);
