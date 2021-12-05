@@ -6,6 +6,8 @@ const { JWT_SECRET, JWT_EXPIRATION_MS } = require("../../config/keys");
 const generateToken = (user) => {
   const payload = {
     _id: user._id,
+    isAdmin: user.isAdmin,
+    profile:user.profile,
     username: user.username,
     exp: Date.now() + JWT_EXPIRATION_MS, // number in milliseconds
   };
@@ -20,8 +22,10 @@ exports.signup = async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
     req.body.password = hashedPassword;
 
-    const newUser = await User.create(req.body)
-    await newUser.populate('profile')
+    // req.body.profile = null;
+    const newUser = await User.create(req.body);
+
+    await newUser.populate("profile");
     // console.log(newUser);
     // req.body.owner = req.user._id;
     // const newProfile = await Useer.Profile.create(req.body);
@@ -29,38 +33,39 @@ exports.signup = async (req, res, next) => {
 
     const token = generateToken(newUser);
 
-    res.status(201).json({ token, newUser });
+    res.status(201).json({ token });
   } catch (error) {
     next(error);
   }
 };
 
-exports.signin = async(req, res, next) => {
-try{  // passport passed user through req.user
-  const token = await generateToken(req.user);
-  res.json({ token });
-}catch(error){
-  console.log(error)
-}}
+exports.signin = async (req, res, next) => {
+  try {
+    // passport passed user through req.user
+    const token = await generateToken(req.user);
+    res.json({ token });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-exports.fetchUsers=async (req,res,next)=>{
-    try {
-        const usersList = await User.find()
-        res.status(200).json(usersList)
-    } catch (error) {
-        console.log(error)
-    }
-}
-// exports.updateProfile=async(req,res,next)=>{
-// try{
-//   req.body.owner=req.user._id
-//   const updateprofile = await profile.findByIdAndUpdate(
-//     req.profile,
-//     req.body,
-//     { new: true, runValidators: true } // returns the updated profile
-//   ).populate("");
-//    res.status(200).json(updateprofile);
-// } catch (error) {
-//   console.log(error)
-// }
-// }
+exports.fetchUsers = async (req, res, next) => {
+  try {
+    const usersList = await User.find();
+    res.status(200).json(usersList);
+  } catch (error) {
+    console.log(error);
+  }
+};
+exports.updateProfile = async (req, res, next) => {
+  try {
+    const updateprofile = await User.findByIdAndUpdate(
+      req.user._id,
+      req.body,
+      { new: true, runValidators: true } // returns the updated profile
+    );
+    res.status(200).json(updateprofile);
+  } catch (error) {
+    console.log(error);
+  }
+};
