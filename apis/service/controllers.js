@@ -1,4 +1,4 @@
-const Service = require("../../db/models/Services");
+const Service = require("../../db/models/Service");
 
 exports.fetchList = async (req, res, next) => {
   try {

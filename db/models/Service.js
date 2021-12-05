@@ -4,7 +4,8 @@ const mongoose = require("mongoose");
 const ServiceSchema = new mongoose.Schema({
     name: 
     {type:String},
-    image:{type:String}
+    image:{type:String},
+    
     
 });
 
