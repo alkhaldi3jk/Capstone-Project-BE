@@ -10,7 +10,7 @@ const UserSchema = new mongoose.Schema({
     // unique: true,
   },
 
-  profile: {
+  profile:{
     name: { type: String },
     age: { type: Number },
     image: { type: String },

@@ -1,6 +1,6 @@
 const express = require("express");
 const passport = require("passport");
-const { signup, signin,fetchUsers } = require("./controllers");
+const { signup, signin,fetchUsers ,updateProfile} = require("./controllers");
 
 // Create a mini express application
 const router = express.Router();
@@ -15,6 +15,6 @@ router.post(
 
 router.get("/dashboard",fetchUsers)
 
-
+// router.put("/user", updateProfile)
 
 module.exports = router;
