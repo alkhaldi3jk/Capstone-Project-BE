@@ -11,12 +11,16 @@ exports.fetchList = async (req, res, next) => {
 
 exports.createService = async (req, res, next) => {
   try {
-    if (req.file) {
-      req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
+    if (req.user.isAdmis === true) {
+      if (req.file) {
+        req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
+      }
+      req.body.owner = req.user._id;
+      const newService = await Service.create(req.body);
+      res.status(201).json(newService);
+    } else {
+      res.status(401).json({ message: "you're not an Admin" });
     }
-    req.body.owner = req.user._id;
-    const newService = await Service.create(req.body);
-    res.status(201).json(newService);
   } catch (error) {
     console.log(error);
   }
@@ -34,15 +38,15 @@ exports.updateService = async (req, res, next) => {
       res.status(200).json(updatedService);
     }
   } catch (error) {
-      console.log(error)
+    console.log(error);
   }
 };
 
 exports.deleteService = async (req, res, next) => {
-    try {
-      await req.Service.remove();
-      res.status(204).end();
-    } catch (error) {
-      next(error);
-    }
-  };
+  try {
+    await req.Service.remove();
+    res.status(204).end();
+  } catch (error) {
+    next(error);
+  }
+};
