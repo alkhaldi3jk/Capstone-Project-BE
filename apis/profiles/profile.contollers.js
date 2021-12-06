@@ -1,5 +1,5 @@
-const Profile = require("../../db/models/Profile");
 const User = require("../../db/models/User");
+const Profile = require("../../db/models/User")
 
 exports.profileList = async (req, res, next) => {
   try {

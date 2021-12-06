@@ -30,7 +30,7 @@ passport.use(jwtStrategy);
 //Routes
 app.use("/api", userRoutes);
 app.use("/api", serviceRoutes);
-app.use("/api/profile",ProfileRoutes)
+// app.use("/api/profile",ProfileRoutes)
 app.use((req, res, next) => {
   res.status(404).json({ message: "Path not found" });
 });
