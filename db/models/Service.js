@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const ServiceSchema = new mongoose.Schema({
   name: { type: String },
   image: { type: String },
+  description: {type : String}
 });
 
 module.exports = model("Service", ServiceSchema);
