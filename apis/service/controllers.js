@@ -11,7 +11,7 @@ exports.fetchList = async (req, res, next) => {
 
 exports.createService = async (req, res, next) => {
   try {
-    if (req.user.isAdmis === true) {
+    if (req.user.isAdmin === true) {
       if (req.file) {
         req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
       }
