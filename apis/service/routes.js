@@ -1,23 +1,30 @@
 const express = require("express");
 const passport = require("passport");
 const upload = require("../../middlewares/multer");
-const { fetchList, createService, updateService } = require("./controllers");
+const {
+  fetchList,
+  createService,
+  updateService,
+  fetchService,
+  serviceDetailFetch,
+} = require("./controllers");
 
 const router = express.Router();
 
 // Param Middleware
 router.param("serviceId", async (req, res, next, serviceId) => {
-    const service = await fetchList(serviceId, next);
-    if (service) {
-      req.service = service;
-      next();
-    } else {
-      next({ status: 404, message: "service Not Found!" });
-    }
-  });
-  
+  const service = await fetchService(serviceId, next);
+  if (service) {
+    req.service = service;
+    next();
+  } else {
+    next({ status: 404, message: "service Not Found!" });
+  }
+});
 
 router.get("/", fetchList);
+router.get("/", fetchService);
+router.get("/dashboard/:serviceId", serviceDetailFetch);
 
 router.post(
   "/dashboard",
@@ -27,7 +34,7 @@ router.post(
 );
 
 router.put(
-  `/dashboard/:serviceId`,
+  '/dashboard/:serviceId',
   passport.authenticate("jwt", { session: false }),
   upload.single("image"),
   updateService
