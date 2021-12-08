@@ -24,12 +24,7 @@ exports.signup = async (req, res, next) => {
 
     // req.body.profile = null;
     const newUser = await User.create(req.body);
-
     await newUser.populate("profile");
-    // console.log(newUser);
-    // req.body.owner = req.user._id;
-    // const newProfile = await Useer.Profile.create(req.body);
-    // console.log(newProfile);
 
     const token = generateToken(newUser);
 
@@ -57,6 +52,7 @@ exports.fetchUsers = async (req, res, next) => {
     console.log(error);
   }
 };
+
 exports.updateProfile = async (req, res, next) => {
   try {
     const updateprofile = await User.findByIdAndUpdate(
