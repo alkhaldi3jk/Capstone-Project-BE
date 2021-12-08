@@ -7,7 +7,7 @@ const generateToken = (user) => {
   const payload = {
     _id: user._id,
     isAdmin: user.isAdmin,
-    profile:user.profile,
+    profile: user.profile,
     username: user.username,
     exp: Date.now() + JWT_EXPIRATION_MS, // number in milliseconds
   };
@@ -46,6 +46,7 @@ exports.signin = async (req, res, next) => {
 
 exports.fetchUsers = async (req, res, next) => {
   try {
+    // REVIEW: If you're fetching users, you need to remove the password field
     const usersList = await User.find();
     res.status(200).json(usersList);
   } catch (error) {
@@ -60,6 +61,7 @@ exports.updateProfile = async (req, res, next) => {
       req.body,
       { new: true, runValidators: true } // returns the updated profile
     );
+    // REVIEW: You need to remove the password before sending the response
     res.status(200).json(updateprofile);
   } catch (error) {
     console.log(error);

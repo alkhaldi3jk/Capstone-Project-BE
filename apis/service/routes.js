@@ -19,9 +19,11 @@ router.param("serviceId", async (req, res, next, serviceId) => {
     req.service = service;
     next();
   } else {
+    // REVIEW: Service not service
     next({ status: 404, message: "service Not Found!" });
   }
 });
+// REVIEW: Naming convention for all your routes: Remove /dashboard, /services is enough. The backend doesn't care where you're using this route
 
 router.get("/", fetchList);
 router.get("/", fetchService);

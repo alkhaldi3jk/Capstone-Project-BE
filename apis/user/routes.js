@@ -13,8 +13,10 @@ router.post(
   signin
 );
 
+// REVIEW: Bad naming: should be /users for example or /profiles
 router.get("/dashboard", fetchUsers);
 
+// REVIEW: Bad naming: should be /users for example or /profiles
 router.put(
   "/user",
   passport.authenticate("jwt", { session: false }),

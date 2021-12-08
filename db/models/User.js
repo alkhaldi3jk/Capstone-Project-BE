@@ -2,22 +2,23 @@ const { model, Schema } = require("mongoose");
 const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
+  // REVIEW: Since your authentication is based on the username, it needs to be unique
   username: { type: String, required: true },
   password: { type: String, required: true },
-  isAdmin:{type:Boolean, default:false},
+  isAdmin: { type: Boolean, default: false },
   email: {
     type: String,
     // required: true,
     // unique: true,
   },
 
-  profile:{
+  profile: {
     name: { type: String },
     age: { type: Number },
     image: { type: String },
   },
-//   owner: {type: mongoose.Schema.Types.ObjectId, ref:"User"}
-
+  // REVIEW: Remove copy pasted code
+  //   owner: {type: mongoose.Schema.Types.ObjectId, ref:"User"}
 });
 
 module.exports = model("User", UserSchema);

@@ -6,7 +6,7 @@ const path = require("path");
 const passport = require("passport");
 connectDB();
 const userRoutes = require("./apis/user/routes");
-const serviceRoutes = require("./apis/service/routes")
+const serviceRoutes = require("./apis/service/routes");
 const app = express();
 // Middleware
 
@@ -28,14 +28,13 @@ passport.use(jwtStrategy);
 
 //Routes
 app.use("/api", userRoutes);
+// REVIEW: Better naming: /api/services
 app.use("/api", serviceRoutes);
 
 app.use("/media", express.static(path.join(__dirname, "media")));
 
-
 app.use(errorHandler);
 
-
 app.listen(8080, () => {
-    console.log("The application is running on localhost:8080");
-  });
+  console.log("The application is running on localhost:8080");
+});

@@ -21,6 +21,7 @@ exports.createService = async (req, res, next) => {
   try {
     if (req.user.isAdmin === true) {
       if (req.file) {
+        // REVIEW: If you have the whole URL here saved in the database the images will only work for the website, use baseURL in both your website and mobile, and fix the URL here
         req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
       }
       req.body.owner = req.user._id;
@@ -34,14 +35,18 @@ exports.createService = async (req, res, next) => {
   }
 };
 exports.serviceDetailFetch = async (req, res, next) => {
+  // REVIEW: Remove the console log if it's working
   console.log("service", req.service.id);
   res.status(200).json(req.service);
 };
 
 exports.updateService = async (req, res, next) => {
   try {
+    // REVIEW: Cleaner way for the condition:
+    // if (req.user.isAdmin)
     if (req.user.isAdmin === true) {
       if (req.file) {
+        // REVIEW: If you have the whole URL here saved in the database the images will only work for the website, use baseURL in both your website and mobile, and fix the URL here
         req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
       }
       const updatedService = await Service.findByIdAndUpdate(
@@ -64,6 +69,8 @@ exports.updateService = async (req, res, next) => {
 
 exports.deleteService = async (req, res, next) => {
   try {
+    // REVIEW: Cleaner way for the condition:
+    // if (req.user.isAdmin)
     if (req.user.isAdmin === true) {
       await req.service.remove();
       res.status(204).end();
