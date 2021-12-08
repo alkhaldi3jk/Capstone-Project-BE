@@ -7,6 +7,7 @@ const {
   updateService,
   fetchService,
   serviceDetailFetch,
+  deleteService,
 } = require("./controllers");
 
 const router = express.Router();
@@ -34,10 +35,16 @@ router.post(
 );
 
 router.put(
-  '/dashboard/:serviceId',
+  "/dashboard/:serviceId",
   passport.authenticate("jwt", { session: false }),
   upload.single("image"),
   updateService
+);
+
+router.delete(
+  "/dashboard/:serviceId",
+  passport.authenticate("jwt", { session: false }),
+  deleteService
 );
 
 module.exports = router;
