@@ -27,7 +27,7 @@ exports.createService = async (req, res, next) => {
       const newService = await Service.create(req.body);
       res.status(201).json(newService);
     } else {
-      res.status(401).json({ message: "you're not an Admin" });
+      res.status(401).json({ message: "You are Not The Admin" });
     }
   } catch (error) {
     console.log(error);
@@ -55,7 +55,7 @@ exports.updateService = async (req, res, next) => {
       // please Abdallah ASK, if you see this remind me to ask
       res.status(200).json(updatedService);
     } else {
-      res.status(401).res.json({ message: "no an admin" });
+      res.status(401).res.json({ message: "You are Not The Admin" });
     }
   } catch (error) {
     next(error);
@@ -64,8 +64,12 @@ exports.updateService = async (req, res, next) => {
 
 exports.deleteService = async (req, res, next) => {
   try {
-    await req.Service.remove();
-    res.status(204).end();
+    if (req.user.isAdmin === true) {
+      await req.service.remove();
+      res.status(204).end();
+    } else {
+      res.status(401).json({ message: "You are Not The Admin" });
+    }
   } catch (error) {
     next(error);
   }
