@@ -8,6 +8,7 @@ connectDB();
 const userRoutes = require("./apis/user/routes");
 const serviceRoutes = require("./apis/service/routes")
 const app = express();
+const appointmentRoutes = require("./apis/Appointment/routes")
 // Middleware
 
 const logger = require("./middlewares/logger");
@@ -29,7 +30,7 @@ passport.use(jwtStrategy);
 //Routes
 app.use("/api", userRoutes);
 app.use("/api", serviceRoutes);
-
+app.use("/api", appointmentRoutes)
 app.use("/media", express.static(path.join(__dirname, "media")));
 
 
