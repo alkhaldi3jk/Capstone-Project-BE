@@ -7,15 +7,11 @@ const AppointmentSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
-    items: [
-      {
-        service: { type: Schema.Types.ObjectId, ref: "Service" },
-        // quantity: { type: Number, min: 1 },
       
-
-    // from:{type:Number,min:1}
-  },
-    ],
+        service: { type: Schema.Types.ObjectId, ref: "Service" },
+    from:{type:Number,min:1},
+    to :{type:Number,min:1}
+  
   
 }
 
