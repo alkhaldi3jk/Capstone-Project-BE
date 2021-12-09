@@ -8,6 +8,15 @@ const AppointmentSchema = new Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+
+      
+        service: { type: Schema.Types.ObjectId, ref: "Service" },
+    from:{type:Number,min:1},
+    to :{type:Number,min:1}
+  
+  
+}
+
     request: [
       {
         service: [{ type: mongoose.Schema.Types.ObjectId, ref: "Service" }],
@@ -16,6 +25,7 @@ const AppointmentSchema = new Schema(
   },
   { timeStamps: true }
 );
+
 
 
 module.exports = model("Appointment", AppointmentSchema);

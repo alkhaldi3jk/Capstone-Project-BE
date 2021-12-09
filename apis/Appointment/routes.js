@@ -26,15 +26,15 @@ const router = express.Router();
 
 router.post(
   "/appointments",
-  passport.authenticate("jwt"), appointments),
+  passport.authenticate("jwt",{ session: false }), appointments);
 //   upload.single("image")
 
-// router.put(
-//   "/dashboard/:appointmentId",
-//   passport.authenticate("jwt", { session: false }),
-// //   upload.single("image"),
-//   updateAppointment
-// );
+router.put(
+  "/dashboard/:appointmentId",
+  passport.authenticate("jwt", { session: false }),
+//   upload.single("image"),
+  updateAppointment
+);
 
 // router.delete(
 //   "/dashboard/:appointmentId",
