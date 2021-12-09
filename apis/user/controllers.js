@@ -44,6 +44,7 @@ exports.signin = async (req, res, next) => {
   }
 };
 
+
 exports.fetchUsers = async (req, res, next) => {
   try {
     // REVIEW: If you're fetching users, you need to remove the password field

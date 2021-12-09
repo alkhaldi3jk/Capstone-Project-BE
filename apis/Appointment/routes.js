@@ -30,16 +30,16 @@ router.post(
 //   upload.single("image")
 
 router.put(
-  "/dashboard/:appointmentId",
+  "/appointments/:appointmentId",
   passport.authenticate("jwt", { session: false }),
 //   upload.single("image"),
   updateAppointment
 );
 
-// router.delete(
-//   "/dashboard/:appointmentId",
-//   passport.authenticate("jwt", { session: false }),
-//   deleteAppointment
-// );
+router.delete(
+  "/appointments/:appointmentId",
+  passport.authenticate("jwt", { session: false }),
+  deleteAppointment
+);
 
 module.exports = router;
