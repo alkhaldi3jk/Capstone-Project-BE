@@ -1,6 +1,7 @@
 const express = require("express");
 const passport = require("passport");
 const { signup, signin, fetchUsers, updateProfile } = require("./controllers");
+const upload = require("../../middlewares/multer");
 
 // Create a mini express application
 const router = express.Router();
@@ -13,11 +14,12 @@ router.post(
   signin
 );
 
-router.get("/dashboard", fetchUsers);
+router.get("/users", fetchUsers);
 
 router.put(
-  "/user",
+  "/users",
   passport.authenticate("jwt", { session: false }),
+  upload.single("image"),
   updateProfile
 );
 

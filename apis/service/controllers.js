@@ -21,7 +21,7 @@ exports.createService = async (req, res, next) => {
   try {
     if (req.user.isAdmin === true) {
       if (req.file) {
-        req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
+        req.body.image = `/${req.file.path}`;
       }
       req.body.owner = req.user._id;
       const newService = await Service.create(req.body);
@@ -34,7 +34,6 @@ exports.createService = async (req, res, next) => {
   }
 };
 exports.serviceDetailFetch = async (req, res, next) => {
-  console.log("service", req.service.id);
   res.status(200).json(req.service);
 };
 
@@ -42,10 +41,10 @@ exports.updateService = async (req, res, next) => {
   try {
     if (req.user.isAdmin === true) {
       if (req.file) {
-        req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
+        req.body.image = `/${req.file.path}`;
       }
       const updatedService = await Service.findByIdAndUpdate(
-        req.service,
+        req.Service,
         req.body,
         {
           new: true,
@@ -65,7 +64,7 @@ exports.updateService = async (req, res, next) => {
 exports.deleteService = async (req, res, next) => {
   try {
     if (req.user.isAdmin === true) {
-      await req.service.remove();
+      await req.Service.remove();
       res.status(204).end();
     } else {
       res.status(401).json({ message: "You are Not The Admin" });
