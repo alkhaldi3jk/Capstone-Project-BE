@@ -2,9 +2,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const JWTStrategy = require("passport-jwt").Strategy;
 const { fromAuthHeaderAsBearerToken } = require("passport-jwt").ExtractJwt;
 const bcrypt = require("bcrypt");
-
 const User = require("../db/models/User");
-
 const { JWT_SECRET } = require("../config/keys");
 
 exports.localStrategy = new LocalStrategy(async (username, password, done) => {
@@ -18,20 +16,6 @@ exports.localStrategy = new LocalStrategy(async (username, password, done) => {
     if (passwordsMatch) return done(null, user);
 
     return done(null, false); // throw a 401 error
-
-    // if (user) {
-    //   // validate password
-    //   const passwordsMatch = await bcrypt.compare(password, user.password);
-    //   if (passwordsMatch) {
-    //     // if correct, we pass into the controller
-    //     return done(null, user);
-    //   } else {
-    //     // if password incorrect, we throw a 401 error
-    //     return done(null, error);
-    //   }
-    // } else {
-    //   return done(null, false); // throw a 401 error
-    // }
   } catch (error) {
     done(error);
   }

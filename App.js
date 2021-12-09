@@ -29,8 +29,10 @@ passport.use(jwtStrategy);
 
 //Routes
 app.use("/api", userRoutes);
-app.use("/api", serviceRoutes);
+
+app.use("/api/services", serviceRoutes);
 app.use("/api", appointmentRoutes)
+
 app.use("/media", express.static(path.join(__dirname, "media")));
 
 

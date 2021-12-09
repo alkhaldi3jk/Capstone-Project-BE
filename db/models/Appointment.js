@@ -4,21 +4,18 @@ const mongoose = require("mongoose");
 const AppointmentSchema = new Schema(
   {
     user: {
-      type: Schema.Types.ObjectId,
+
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
-    items: [
+    request: [
       {
-        service: { type: Schema.Types.ObjectId, ref: "Service" },
-        // quantity: { type: Number, min: 1 },
-      
-
-    // from:{type:Number,min:1}
-  },
+        service: [{ type: mongoose.Schema.Types.ObjectId, ref: "Service" }],
+      },
     ],
-  
-}
+  },
+  { timeStamps: true }
+);
 
-)
 
 module.exports = model("Appointment", AppointmentSchema);
