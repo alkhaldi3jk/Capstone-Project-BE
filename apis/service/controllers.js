@@ -21,7 +21,9 @@ exports.createService = async (req, res, next) => {
   try {
     if (req.user.isAdmin === true) {
       if (req.file) {
-        req.body.image = `/${req.file.path}`;
+        // /media/imagename.jpg
+        // req.body.image = `/${req.file.path}`;
+        req.body.image = `/${(req.file.path)}`;
       }
       req.body.owner = req.user._id;
       const newService = await Service.create(req.body);
