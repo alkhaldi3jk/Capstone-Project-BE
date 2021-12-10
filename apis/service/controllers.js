@@ -10,10 +10,10 @@ exports.fetchList = async (req, res, next) => {
 };
 exports.fetchService = async (serviceId, next) => {
   try {
-    const services = await Service.findById(serviceId);
-    return services;
+    const service = await Service.findById(serviceId);
+    return service;
   } catch (error) {
-    next(error);
+    console.log(error);
   }
 };
 
@@ -23,7 +23,7 @@ exports.createService = async (req, res, next) => {
       if (req.file) {
         // /media/imagename.jpg
         // req.body.image = `/${req.file.path}`;
-        req.body.image = `/${(req.file.path)}`;
+        req.body.image = `/${req.file.path}`;
       }
       req.body.owner = req.user._id;
       const newService = await Service.create(req.body);
@@ -36,7 +36,13 @@ exports.createService = async (req, res, next) => {
   }
 };
 exports.serviceDetailFetch = async (req, res, next) => {
-  res.status(200).json(req.service);
+  try {
+    console.log("trip", req.Service);
+
+    res.status(200).json(req.Service);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 exports.updateService = async (req, res, next) => {

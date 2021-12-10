@@ -1,12 +1,13 @@
 const express = require("express");
 const passport = require("passport");
-const upload = require("../../middlewares/multer");
+const Appointment = require("../../db/models/Appointment");
 const {
-  appointments,
+  fetchAppointment,
   createAppointment,
   updateAppointment,
-  fetchAppointment,
+  fetchAppointmentList,
   deleteAppointment,
+  appointmentDetailFetch,
 } = require("./controllers");
 
 const router = express.Router();
@@ -15,21 +16,23 @@ const router = express.Router();
 router.param("appointmentId", async (req, res, next, appointmentId) => {
   const appointment = await fetchAppointment(appointmentId, next);
   if (appointment) {
-    req.appointment = appointment;
+    req.Appointment = appointment;
     next();
   } else {
     next({ status: 404, message: "appointment Not Found!" });
   }
 });
 
-router.get("/", fetchAppointment);
+router.get("", fetchAppointmentList);
+router.get("", fetchAppointment);
+
+router.get("/:appointmentId", appointmentDetailFetch);
 
 router.post(
-  "/",
+  "",
   passport.authenticate("jwt", { session: false }),
-  appointments
+  createAppointment
 );
-//   upload.single("image")
 
 router.put(
   "/:appointmentId",
