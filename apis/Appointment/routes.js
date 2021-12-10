@@ -2,7 +2,7 @@ const express = require("express");
 const passport = require("passport");
 const upload = require("../../middlewares/multer");
 const {
-    appointments,
+  appointments,
   createAppointment,
   updateAppointment,
   fetchAppointment,
@@ -12,32 +12,33 @@ const {
 const router = express.Router();
 
 // Param Middleware
-// router.param("appointmentId", async (req, res, next, appointmentId) => {
-//   const appointment = await fetchAppointment(appointmentId, next);
-//   if (appointment) {
-//     req.appointment = appointment;
-//     next();
-//   } else {
-//     next({ status: 404, message: "appointment Not Found!" });
-//   }
-// });
+router.param("appointmentId", async (req, res, next, appointmentId) => {
+  const appointment = await fetchAppointment(appointmentId, next);
+  if (appointment) {
+    req.appointment = appointment;
+    next();
+  } else {
+    next({ status: 404, message: "appointment Not Found!" });
+  }
+});
 
-// router.get("/", fetchAppointment);
+router.get("/", fetchAppointment);
 
 router.post(
-  "/appointments",
-  passport.authenticate("jwt",{ session: false }), appointments);
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  appointments
+);
 //   upload.single("image")
 
 router.put(
-  "/appointments/:appointmentId",
+  "/:appointmentId",
   passport.authenticate("jwt", { session: false }),
-//   upload.single("image"),
   updateAppointment
 );
 
 router.delete(
-  "/appointments/:appointmentId",
+  "/:appointmentId",
   passport.authenticate("jwt", { session: false }),
   deleteAppointment
 );
