@@ -1,11 +1,12 @@
 const express = require("express");
 const passport = require("passport");
+const Service = require("../../db/models/Service");
 const upload = require("../../middlewares/multer");
 const {
   fetchList,
+  fetchService,
   createService,
   updateService,
-  fetchService,
   serviceDetailFetch,
   deleteService,
 } = require("./controllers");
@@ -23,14 +24,12 @@ router.param("serviceId", async (req, res, next, serviceId) => {
     next({ status: 404, message: "service Not Found!" });
   }
 });
-// REVIEW: Naming convention for all your routes: Remove /dashboard, /services is enough.
-//The backend doesn't care where you're using this route
 router.get("", fetchList);
 router.get("", fetchService);
 router.get("/:serviceId", serviceDetailFetch);
 
 router.post(
-  "/",
+  "",
   passport.authenticate("jwt", { session: false }),
   upload.single("image"),
   createService
