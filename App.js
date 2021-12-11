@@ -8,7 +8,7 @@ connectDB();
 const userRoutes = require("./apis/user/routes");
 const serviceRoutes = require("./apis/service/routes")
 const app = express();
-const appointmentRoutes = require("./apis/Appointment/routes")
+const appointmentRoutes = require("./apis/Request/routes")
 // Middleware
 
 const logger = require("./middlewares/logger");

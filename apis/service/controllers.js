@@ -26,7 +26,7 @@ exports.createService = async (req, res, next) => {
         req.body.image = `/${req.file.path}`;
       }
       req.body.owner = req.user._id;
-      const newService = await Service.create(req.body);
+      const newService = await Service.create(req.body).populate();
       res.status(201).json(newService);
     } else {
       res.status(401).json({ message: "You are Not The Admin" });
