@@ -6,12 +6,10 @@ const ServiceSchema = new mongoose.Schema({
   name: { type: String },
   image: { type: String },
   subtitle: { type: String },
-  //   appointment: [
-  //     {
-  //       type: mongoose.Schema.Types.ObjectId,
-  //       ref: "Appointment",
-  //     },
-  //   ],
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
   slug: { type: String },
 });
 ServiceSchema.plugin(mongooseSlugPlugin, { tmpl: "<%=name%>" });

@@ -29,6 +29,8 @@ exports.appointmentDetailFetch = async (req, res, next) => {
 
 exports.createAppointment = async (req, res, next) => {
   try {
+    req.body.owner = req.user._id;
+
     req.body.user = req.user._id;
     const newAppointment = await Appointment.create(req.body);
     res.status(201).json(newAppointment);
@@ -39,7 +41,8 @@ exports.createAppointment = async (req, res, next) => {
 
 exports.updateAppointment = async (req, res, next) => {
   try {
-    if (req.user._id) {
+    if (req.user) {
+      req.body.owner = req.user._id;
       const updatedAppointment = await Appointment.findByIdAndUpdate(
         req.Appointment,
         req.body,
@@ -61,6 +64,7 @@ exports.updateAppointment = async (req, res, next) => {
 exports.deleteAppointment = async (req, res, next) => {
   try {
     if (req.user._id) {
+      req.body.owner = req.user._id;
       await req.Appointment.remove();
       res.status(204).end();
     } else {
