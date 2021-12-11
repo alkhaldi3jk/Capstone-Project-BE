@@ -11,6 +11,12 @@ const ServiceSchema = new mongoose.Schema({
     ref: "User",
   },
   slug: { type: String },
+  detail: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Detail",
+    },
+  ],
 });
 ServiceSchema.plugin(mongooseSlugPlugin, { tmpl: "<%=name%>" });
 

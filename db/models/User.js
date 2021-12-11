@@ -11,6 +11,8 @@ const UserSchema = new mongoose.Schema({
     unique: true,
   },
 
+  request: [{ type: mongoose.Schema.Types.ObjectId, ref: "Request" }],
+
   profile: {
     name: { type: String },
     age: { type: Number },
