@@ -63,12 +63,11 @@ exports.updateAppointment = async (req, res, next) => {
 
 exports.deleteAppointment = async (req, res, next) => {
   try {
-    if (req.user._id) {
-      req.body.owner = req.user._id;
+    if (req.Appointment.owner.equals(req.user._id)) {
       await req.Appointment.remove();
       res.status(204).end();
     } else {
-      res.status(401).json({ message: "You are Not a user" });
+      res.status(401).json({ message: "You are Not a the owner" });
     }
   } catch (error) {
     console.log(error);
