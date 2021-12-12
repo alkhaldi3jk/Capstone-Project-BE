@@ -1,6 +1,5 @@
 const express = require("express");
 const passport = require("passport");
-const Service = require("../../db/models/Service");
 const upload = require("../../middlewares/multer");
 const {
   fetchList,
@@ -9,6 +8,7 @@ const {
   updateService,
   serviceDetailFetch,
   deleteService,
+  createServiceDetail,
 } = require("./controllers");
 
 const router = express.Router();
@@ -34,6 +34,11 @@ router.post(
   upload.single("image"),
   createService
 );
+router.post(
+  "/:serviceId/details",
+  passport.authenticate("jwt", { session: false }),
+  createServiceDetail
+);
 
 router.put(
   "/:serviceId",
@@ -47,5 +52,7 @@ router.delete(
   passport.authenticate("jwt", { session: false }),
   deleteService
 );
+
+
 
 module.exports = router;

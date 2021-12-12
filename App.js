@@ -6,9 +6,11 @@ const path = require("path");
 const passport = require("passport");
 connectDB();
 const userRoutes = require("./apis/user/routes");
-const serviceRoutes = require("./apis/service/routes")
+const serviceRoutes = require("./apis/service/routes");
+const detailRoutes = require("./apis/serviceDetail/routes");
+const requestRoutes = require("./apis/Request/routes");
+
 const app = express();
-const appointmentRoutes = require("./apis/Request/routes")
 // Middleware
 
 const logger = require("./middlewares/logger");
@@ -29,16 +31,13 @@ passport.use(jwtStrategy);
 
 //Routes
 app.use("/api", userRoutes);
-
+app.use("/api/details", detailRoutes);
 app.use("/api/services", serviceRoutes);
-app.use("/api/appointments", appointmentRoutes)
-
+app.use("/api/requests", requestRoutes);
 app.use("/media", express.static(path.join(__dirname, "media")));
-
 
 app.use(errorHandler);
 
-
 app.listen(8080, () => {
-    console.log("The application is running on localhost:8080");
-  });
+  console.log("The application is running on localhost:8080");
+});

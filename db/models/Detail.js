@@ -5,8 +5,8 @@ const DetailSchema = new Schema(
   {
     name: { type: String },
     date: { type: Date },
-    from: { type: TimeRanges },
-    to: { type: TimeRanges },
+    from: { type: Number },
+    to: { type: Number },
     service: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Service",
