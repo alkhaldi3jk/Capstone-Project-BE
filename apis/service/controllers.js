@@ -1,8 +1,8 @@
 const Service = require("../../db/models/Service");
-
+const Detail = require("../../db/models/Detail");
 exports.fetchList = async (req, res, next) => {
   try {
-    const serviceList = await Service.find();
+    const serviceList = await Service.find().populate("detail");
     res.status(201).json(serviceList);
   } catch (error) {
     console.log(error);
@@ -26,7 +26,7 @@ exports.createService = async (req, res, next) => {
         req.body.image = `/${req.file.path}`;
       }
       req.body.owner = req.user._id;
-      const newService = await Service.create(req.body).populate();
+      const newService = await Service.create(req.body);
       res.status(201).json(newService);
     } else {
       res.status(401).json({ message: "You are Not The Admin" });
@@ -35,10 +35,28 @@ exports.createService = async (req, res, next) => {
     console.log(error);
   }
 };
+exports.createServiceDetail = async (req, res, next) => {
+  // check if the signed in user is the owner of this service
+  try {
+    // if (!req.user._id.equals(req.service.owner._id)) {
+    //   return next({
+    //     status: 401,
+    //     message: "You're not the owner!!!",
+    //   });
+    // }
+
+    req.body.service = req.params.serviceId;
+    const newServiceDetail = await Detail.create(req.body);
+    await Service.findByIdAndUpdate(req.service, {
+      $push: { detail: newServiceDetail._id },
+    });
+    return res.status(201).json(newServiceDetail);
+  } catch (error) {
+    next(error);
+  }
+};
 exports.serviceDetailFetch = async (req, res, next) => {
   try {
-    console.log("trip", req.Service);
-
     res.status(200).json(req.Service);
   } catch (error) {
     console.log(error);
@@ -58,8 +76,7 @@ exports.updateService = async (req, res, next) => {
           new: true,
           runValidators: true,
         }
-      ); /// I saw this in the past code but I didn't know for what
-      // please Abdallah ASK, if you see this remind me to ask
+      );
       res.status(200).json(updatedService);
     } else {
       res.status(401).res.json({ message: "You are Not The Admin" });
