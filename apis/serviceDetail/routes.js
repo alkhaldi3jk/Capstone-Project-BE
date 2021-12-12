@@ -13,22 +13,18 @@ const router = express.Router();
 // Param Middleware
 router.param("detailId", async (req, res, next, detailId) => {
   const detail = await detailFetch(detailId, next);
+  console.log(detailId);
   if (detail) {
-    req.Detail = detail;
+    req.detail = detail;
     next();
   } else {
+    console.log("error");
     next({ status: 404, message: "Detail Not Found!" });
   }
 });
 
 router.get("", detailListFetch);
-router.get("", detailFetch);
-router.get(
-  "/:detailId",
-  passport.authenticate("jwt", { session: false }),
-  serviceDetailFetch
-);
-
+router.get("/:detailId", serviceDetailFetch);
 
 router.put(
   "/:detailId",

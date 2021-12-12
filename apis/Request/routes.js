@@ -1,31 +1,32 @@
-// const express = require("express");
-// const passport = require("passport");
-// const {
-//   fetchRequest,
-//   createRequest,
-//   updateRequest,
-//   fetchRequestList,
-//   deleteRequest,
-//   requestDetailFetch,
-// } = require("./controllers");
+const express = require("express");
+const passport = require("passport");
+const {
+  fetchRequest,
+  createRequest,
+  updateRequest,
+  fetchRequestList,
+  deleteRequest,
+  requestDetailFetch,
+  checkout
+} = require("./controllers");
 
-// const router = express.Router();
+const router = express.Router();
 
-// // Param Middleware
-// router.param("requestId", async (req, res, next, requestId) => {
-//   const request = await fetchRequest(requestId, next);
-//   if (request) {
-//     req.Request = request;
-//     next();
-//   } else {
-//     next({ status: 404, message: "request Not Found!" });
-//   }
-// });
+// Param Middleware
+router.param("requestId", async (req, res, next, requestId) => {
+  const request = await fetchRequest(requestId, next);
+  if (request) {
+    req.request = request;
+    next();
+  } else {
+    next({ status: 404, message: "request Not Found!" });
+  }
+});
 
-// router.get("", fetchRequestList);
-// router.get("", fetchRequest);
+router.get("", fetchRequestList);
+router.get("", fetchRequest);
 
-// router.get("/:requestId", requestDetailFetch);
+router.get("/:requestId", requestDetailFetch);
 
 // router.post(
 //   "",
@@ -33,24 +34,17 @@
 //   createRequest
 // );
 
-// router.put(
-//   "/:requestId",
-//   passport.authenticate("jwt", { session: false }),
-//   updateRequest
-// );
+router.put(
+  "/:requestId",
+  passport.authenticate("jwt", { session: false }),
+  updateRequest
+);
 
-// router.delete(
-//   "/:requestId",
-//   passport.authenticate("jwt", { session: false }),
-//   deleteRequest
-// );
-
-
-const express = require("express");
-const passport = require("passport");
-const { checkout } = require("./controllers");
-
-const router = express.Router();
+router.delete(
+  "/:requestId",
+  passport.authenticate("jwt", { session: false }),
+  deleteRequest
+);
 
 router.post(
   "/checkout",
@@ -59,4 +53,3 @@ router.post(
 );
 
 module.exports = router;
-

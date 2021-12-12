@@ -17,15 +17,17 @@ const router = express.Router();
 router.param("serviceId", async (req, res, next, serviceId) => {
   const service = await fetchService(serviceId, next);
   if (service) {
-    req.Service = service;
+    req.service = service;
     next();
   } else {
-    // REVIEW: Service not service
-    next({ status: 404, message: "service Not Found!" });
+   
+    next({ status: 404, message: "Service Not Found!" });
   }
 });
+
+
 router.get("", fetchList);
-router.get("", fetchService);
+
 router.get("/:serviceId", serviceDetailFetch);
 
 router.post(
@@ -52,7 +54,5 @@ router.delete(
   passport.authenticate("jwt", { session: false }),
   deleteService
 );
-
-
 
 module.exports = router;

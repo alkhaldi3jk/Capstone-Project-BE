@@ -2,7 +2,8 @@ const Detail = require("../../db/models/Detail");
 
 exports.detailListFetch = async (req, res, next) => {
   try {
-    const details = await Detail.find().populate("service");
+    const details = await Detail.find()
+    .populate("service");
     return res.json(details);
   } catch (error) {
     next(error);
@@ -11,7 +12,7 @@ exports.detailListFetch = async (req, res, next) => {
 
 exports.detailFetch = async (detailId, next) => {
   try {
-    const detail = await detail.findById(detailId);
+    const detail = await Detail.findById(detailId);
     return detail;
   } catch (error) {
     next(error);
