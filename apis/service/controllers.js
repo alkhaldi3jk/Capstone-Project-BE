@@ -1,16 +1,18 @@
 const Service = require("../../db/models/Service");
 const Detail = require("../../db/models/Detail");
+
 exports.fetchList = async (req, res, next) => {
   try {
     const serviceList = await Service.find().populate("detail");
-    res.status(201).json(serviceList);
+    res.status(200).json(serviceList);
   } catch (error) {
     console.log(error);
   }
 };
+
 exports.fetchService = async (serviceId, next) => {
   try {
-    const service = await Service.findById(serviceId);
+    const service = await Service.findById(serviceId).populate("detail");
     return service;
   } catch (error) {
     console.log(error);
