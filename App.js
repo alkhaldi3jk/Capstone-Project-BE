@@ -7,7 +7,7 @@ const passport = require("passport");
 connectDB();
 const userRoutes = require("./apis/user/routes");
 const serviceRoutes = require("./apis/service/routes");
-const detailRoutes = require("./apis/serviceDetail/routes");
+const optionRoutes = require("./apis/serviceOption/routes");
 const requestRoutes = require("./apis/Request/routes");
 
 const app = express();
@@ -31,7 +31,7 @@ passport.use(jwtStrategy);
 
 //Routes
 app.use("/api", userRoutes);
-app.use("/api/details", detailRoutes);
+app.use("/api/options", optionRoutes);
 app.use("/api/services", serviceRoutes);
 app.use("/api/requests", requestRoutes);
 app.use("/media", express.static(path.join(__dirname, "media")));

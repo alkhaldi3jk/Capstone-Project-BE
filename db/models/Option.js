@@ -1,12 +1,13 @@
 const { model, Schema } = require("mongoose");
 const mongoose = require("mongoose");
 
-const DetailSchema = new Schema(
+const OptionSchema = new Schema(
   {
     name: { type: String },
     date: { type: Date },
     from: { type: Number },
     to: { type: Number },
+
     service: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Service",
@@ -21,4 +22,4 @@ const DetailSchema = new Schema(
   }
 );
 
-module.exports = model("Detail", DetailSchema);
+module.exports = model("Option", OptionSchema);
