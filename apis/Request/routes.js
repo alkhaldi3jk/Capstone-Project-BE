@@ -6,7 +6,7 @@ const {
   updateRequest,
   fetchRequestList,
   deleteRequest,
-  requestDetailFetch,
+  requestOptionFetch,
   checkout
 } = require("./controllers");
 
@@ -26,7 +26,7 @@ router.param("requestId", async (req, res, next, requestId) => {
 router.get("", fetchRequestList);
 router.get("", fetchRequest);
 
-router.get("/:requestId", requestDetailFetch);
+router.get("/:requestId", requestOptionFetch);
 
 // router.post(
 //   "",

@@ -9,7 +9,7 @@ const RequestSchema = new Schema(
     },
     items: [
       {
-        detail: { type: mongoose.Schema.Types.ObjectId, ref: "Detail" },
+        option: { type: mongoose.Schema.Types.ObjectId, ref: "Option" },
       },
     ],
   },

@@ -1,9 +1,9 @@
 const Service = require("../../db/models/Service");
-const Detail = require("../../db/models/Detail");
+const Option = require("../../db/models/Option");
 
 exports.fetchList = async (req, res, next) => {
   try {
-    const serviceList = await Service.find().populate("detail");
+    const serviceList = await Service.find().populate("option");
     res.status(200).json(serviceList);
   } catch (error) {
     console.log(error);
@@ -12,7 +12,7 @@ exports.fetchList = async (req, res, next) => {
 
 exports.fetchService = async (serviceId, next) => {
   try {
-    const service = await Service.findById(serviceId).populate("detail");
+    const service = await Service.findById(serviceId).populate("option");
     return service;
   } catch (error) {
     console.log(error);
@@ -37,7 +37,7 @@ exports.createService = async (req, res, next) => {
     console.log(error);
   }
 };
-exports.createServiceDetail = async (req, res, next) => {
+exports.createServiceOption = async (req, res, next) => {
   // check if the signed in user is the owner of this service
   try {
     // if (!req.user._id.equals(req.service.owner._id)) {
@@ -48,16 +48,16 @@ exports.createServiceDetail = async (req, res, next) => {
     // }
 
     req.body.service = req.params.serviceId;
-    const newServiceDetail = await Detail.create(req.body);
+    const newServiceOption = await Option.create(req.body);
     await Service.findByIdAndUpdate(req.service, {
-      $push: { detail: newServiceDetail._id },
+      $push: { option: newServiceOption._id },
     });
-    return res.status(201).json(newServiceDetail);
+    return res.status(201).json(newServiceOption);
   } catch (error) {
     next(error);
   }
 };
-exports.serviceDetailFetch = async (req, res, next) => {
+exports.serviceOptionFetch = async (req, res, next) => {
   try {
     res.status(200).json(req.Service);
   } catch (error) {

@@ -11,10 +11,10 @@ const ServiceSchema = new mongoose.Schema({
     ref: "User",
   },
   slug: { type: String },
-  detail: [
+  option: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Detail",
+      ref: "Option",
     },
   ],
 });

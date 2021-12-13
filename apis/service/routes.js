@@ -6,9 +6,9 @@ const {
   fetchService,
   createService,
   updateService,
-  serviceDetailFetch,
+  serviceOptionFetch,
   deleteService,
-  createServiceDetail,
+  createServiceOption,
 } = require("./controllers");
 
 const router = express.Router();
@@ -28,7 +28,7 @@ router.param("serviceId", async (req, res, next, serviceId) => {
 
 router.get("", fetchList);
 
-router.get("/:serviceId", serviceDetailFetch);
+router.get("/:serviceId", serviceOptionFetch);
 
 router.post(
   "",
@@ -37,9 +37,9 @@ router.post(
   createService
 );
 router.post(
-  "/:serviceId/details",
+  "/:serviceId/options",
   passport.authenticate("jwt", { session: false }),
-  createServiceDetail
+  createServiceOption
 );
 
 router.put(

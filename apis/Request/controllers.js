@@ -1,5 +1,5 @@
 const Request = require("../../db/models/Request");
-const Detail = require("../../db/models/Detail");
+const Option = require("../../db/models/Option");
 exports.fetchRequestList = async (req, res, next) => {
   try {
     const request = await Request.find().populate("service");
@@ -17,7 +17,7 @@ exports.fetchRequest = async (requestId, next) => {
     console.log(error);
   }
 };
-exports.requestDetailFetch = async (req, res, next) => {
+exports.requestOptionFetch = async (req, res, next) => {
   try {
     res.status(200).json(req.Request).populate("service");
   } catch (error) {
@@ -77,8 +77,8 @@ exports.checkout = async (req, res, next) => {
     // req.body.items.forEach(async (item) => {
     //   const foundProduct = await Product.findById(item.product);
     //   foundProduct.quantity = foundProduct - item.quantity;
-    //   const updatedItem = await Detail.findByIdAndUpdate(
-    //     item.detail,
+    //   const updatedItem = await Option.findByIdAndUpdate(
+    //     item.option,
     //     { $inc: { quantity: -item.quantity } }
     //   );
     // });

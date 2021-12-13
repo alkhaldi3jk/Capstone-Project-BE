@@ -14,6 +14,14 @@ const UserSchema = new mongoose.Schema({
   request: [{ type: mongoose.Schema.Types.ObjectId, ref: "Request" }],
 
   profile: {
+    address: [
+      {
+        name: { type: String },
+        street: { type: Number },
+        block: { type: Number },
+        house: { type: Number },
+      },
+    ],
     name: { type: String },
     age: { type: Number },
     image: { type: String },
