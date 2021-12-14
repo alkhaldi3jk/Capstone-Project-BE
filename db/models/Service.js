@@ -6,6 +6,11 @@ const ServiceSchema = new mongoose.Schema({
   name: { type: String },
   image: { type: String },
   subtitle: { type: String },
+  about: { type: String },
+  preferences1: {type: String },
+  preferences2: {type: String },
+  placeholder: { type: String },
+  price: { type: String },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",

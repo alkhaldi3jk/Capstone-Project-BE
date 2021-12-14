@@ -7,11 +7,7 @@ const RequestSchema = new Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
-    items: [
-      {
-        option: { type: mongoose.Schema.Types.ObjectId, ref: "Option" },
-      },
-    ],
+    option: { type: mongoose.Schema.Types.ObjectId, ref: "Option" },
   },
   { timeStamps: true }
 );
