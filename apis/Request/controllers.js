@@ -25,17 +25,17 @@ exports.requestOptionFetch = async (req, res, next) => {
   }
 };
 
-// exports.createRequest = async (req, res, next) => {
-//   try {
-//     req.body.owner = req.user._id;
+exports.createRequest = async (req, res, next) => {
+  try {
+    req.body.owner = req.user._id;
 
-//     req.body.user = req.user._id;
-//     const newRequest = await Request.create(req.body);
-//     res.status(201).json(newRequest);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+    req.body.user = req.user._id;
+    const newRequest = await Request.create(req.body);
+    res.status(201).json(newRequest);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 exports.updateRequest = async (req, res, next) => {
   try {

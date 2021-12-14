@@ -1,6 +1,12 @@
 const express = require("express");
 const passport = require("passport");
-const { signup, signin, fetchUsers, updateProfile } = require("./controllers");
+const {
+  signup,
+  signin,
+  fetchUsers,
+  updateProfile,
+  userFetch,
+} = require("./controllers");
 const upload = require("../../middlewares/multer");
 
 // Create a mini express application
@@ -15,6 +21,11 @@ router.post(
 );
 
 router.get("/users", fetchUsers);
+router.get(
+  "/users/account",
+  passport.authenticate("jwt", { session: false }),
+  userFetch
+);
 
 router.put(
   "/users",
