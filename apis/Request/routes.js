@@ -28,11 +28,11 @@ router.get("", fetchRequest);
 
 router.get("/:requestId", requestOptionFetch);
 
-// router.post(
-//   "",
-//   passport.authenticate("jwt", { session: false }),
-//   createRequest
-// );
+router.post(
+  "/request",
+  passport.authenticate("jwt", { session: false }),
+  createRequest
+);
 
 router.put(
   "/:requestId",
