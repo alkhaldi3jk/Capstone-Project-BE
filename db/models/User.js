@@ -11,17 +11,10 @@ const UserSchema = new mongoose.Schema({
     unique: true,
   },
 
-  request: [{ type: mongoose.Schema.Types.ObjectId, ref: "Request" }],
+  requests: [{ type: mongoose.Schema.Types.ObjectId, ref: "Request" }],
 
   profile: {
-    address: [
-      {
-        name: { type: String },
-        street: { type: Number },
-        block: { type: Number },
-        house: { type: Number },
-      },
-    ],
+    address: {type:String},
     name: { type: String },
     age: { type: Number },
     image: { type: String },

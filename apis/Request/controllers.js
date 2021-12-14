@@ -1,8 +1,11 @@
 const Request = require("../../db/models/Request");
 const Option = require("../../db/models/Option");
+const User = require("../../db/models/User");
+
 exports.fetchRequestList = async (req, res, next) => {
   try {
-    const request = await Request.find().populate("service");
+    const request = await Request.find().populate("options");
+    // .populate("service");
     res.status(200).json(request);
   } catch (error) {
     console.log(error);
@@ -11,7 +14,7 @@ exports.fetchRequestList = async (req, res, next) => {
 
 exports.fetchRequest = async (requestId, next) => {
   try {
-    const request = await Request.findById(requestId);
+    const request = await Request.findById(requestId).populate("options");
     return request;
   } catch (error) {
     console.log(error);
@@ -19,7 +22,7 @@ exports.fetchRequest = async (requestId, next) => {
 };
 exports.requestOptionFetch = async (req, res, next) => {
   try {
-    res.status(200).json(req.Request).populate("service");
+    res.status(200).json(req.Request).populate("options");
   } catch (error) {
     console.log(error);
   }
@@ -27,10 +30,18 @@ exports.requestOptionFetch = async (req, res, next) => {
 
 exports.createRequest = async (req, res, next) => {
   try {
-    req.body.owner = req.user._id;
+    // req.body.owner = req.user._id;
 
     req.body.user = req.user._id;
     const newRequest = await Request.create(req.body);
+    await User.findByIdAndUpdate(
+      req.user,
+      {
+        $push: { requests: newRequest._id },
+      },
+      // { $set: { user: req.body } },
+      // { new: true, runValidators: true } // returns the updated profile
+    );
     res.status(201).json(newRequest);
   } catch (error) {
     console.log(error);
@@ -82,7 +93,9 @@ exports.checkout = async (req, res, next) => {
     //     { $inc: { quantity: -item.quantity } }
     //   );
     // });
-    const newRequest = await Request.create(req.body);
+    const newRequest = await Request.create(req.body)
+    // .populate("option");
+
     res.status(201).json(newRequest);
   } catch (error) {
     next(error);

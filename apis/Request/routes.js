@@ -7,7 +7,7 @@ const {
   fetchRequestList,
   deleteRequest,
   requestOptionFetch,
-  checkout
+  checkout,
 } = require("./controllers");
 
 const router = express.Router();
@@ -19,7 +19,7 @@ router.param("requestId", async (req, res, next, requestId) => {
     req.request = request;
     next();
   } else {
-    next({ status: 404, message: "request Not Found!" });
+    next({ status: 404, message: "Request Not Found!" });
   }
 });
 
