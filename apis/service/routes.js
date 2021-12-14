@@ -6,7 +6,7 @@ const {
   fetchService,
   createService,
   updateService,
-  serviceOptionFetch,
+  serviceFetchId,
   deleteService,
   createServiceOption,
 } = require("./controllers");
@@ -20,15 +20,13 @@ router.param("serviceId", async (req, res, next, serviceId) => {
     req.service = service;
     next();
   } else {
-   
     next({ status: 404, message: "Service Not Found!" });
   }
 });
 
-
 router.get("", fetchList);
 
-router.get("/:serviceId", serviceOptionFetch);
+router.get("/:serviceId", serviceFetchId);
 
 router.post(
   "",

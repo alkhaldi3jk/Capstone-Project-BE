@@ -9,6 +9,7 @@ const generateToken = (user) => {
     isAdmin: user.isAdmin,
     profile: user.profile,
     username: user.username,
+    request: user.request,
     exp: Date.now() + JWT_EXPIRATION_MS, // number in milliseconds
   };
 
@@ -24,7 +25,7 @@ exports.signup = async (req, res, next) => {
 
     // req.body.profile = null;
     const newUser = await User.create(req.body);
-    await newUser.populate("profile");
+    await newUser.populate("profile", "request");
 
     const token = generateToken(newUser);
 
@@ -44,12 +45,24 @@ exports.signin = async (req, res, next) => {
   }
 };
 
-
 exports.fetchUsers = async (req, res, next) => {
   try {
     // REVIEW: If you're fetching users, you need to remove the password field
-    const usersList = await User.find();
+    const usersList = await User.find().populate();
     res.status(200).json(usersList);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.userFetch = async (req, res, next) => {
+  try {
+    const oneUser = await User.findById(
+      req.user._id,
+      req.body.request
+    ).populate("request");
+    // return oneUser;
+    res.status(200).json(oneUser);
   } catch (error) {
     console.log(error);
   }

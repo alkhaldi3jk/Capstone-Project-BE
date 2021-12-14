@@ -12,8 +12,15 @@ exports.fetchList = async (req, res, next) => {
 
 exports.fetchService = async (serviceId, next) => {
   try {
-    const service = await Service.findById(serviceId).populate("option");
+    const service = await Service.findById(serviceId);
     return service;
+  } catch (error) {
+    console.log(error);
+  }
+};
+exports.serviceFetchId = async (req, res, next) => {
+  try {
+    res.status(200).json(req.Service).populate("option");
   } catch (error) {
     console.log(error);
   }
@@ -40,12 +47,6 @@ exports.createService = async (req, res, next) => {
 exports.createServiceOption = async (req, res, next) => {
   // check if the signed in user is the owner of this service
   try {
-    // if (!req.user._id.equals(req.service.owner._id)) {
-    //   return next({
-    //     status: 401,
-    //     message: "You're not the owner!!!",
-    //   });
-    // }
 
     req.body.service = req.params.serviceId;
     const newServiceOption = await Option.create(req.body);
@@ -57,13 +58,7 @@ exports.createServiceOption = async (req, res, next) => {
     next(error);
   }
 };
-exports.serviceOptionFetch = async (req, res, next) => {
-  try {
-    res.status(200).json(req.Service);
-  } catch (error) {
-    console.log(error);
-  }
-};
+
 
 exports.updateService = async (req, res, next) => {
   try {

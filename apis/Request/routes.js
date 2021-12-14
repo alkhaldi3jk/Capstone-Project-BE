@@ -24,15 +24,14 @@ router.param("requestId", async (req, res, next, requestId) => {
 });
 
 router.get("", fetchRequestList);
-router.get("", fetchRequest);
 
 router.get("/:requestId", requestOptionFetch);
 
-// router.post(
-//   "",
-//   passport.authenticate("jwt", { session: false }),
-//   createRequest
-// );
+router.post(
+  "",
+  passport.authenticate("jwt", { session: false }),
+  createRequest
+);
 
 router.put(
   "/:requestId",

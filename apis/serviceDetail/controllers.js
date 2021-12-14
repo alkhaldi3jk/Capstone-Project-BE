@@ -3,7 +3,7 @@ const Option = require("../../db/models/Option");
 exports.optionListFetch = async (req, res, next) => {
   try {
     const options = await Option.find().populate("service");
-    return res.json(options);
+    return res.status(200).json(options);
   } catch (error) {
     next(error);
   }
