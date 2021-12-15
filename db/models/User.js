@@ -13,7 +13,7 @@ const UserSchema = new mongoose.Schema({
   request: [{ type: mongoose.Schema.Types.ObjectId, ref: "Request" }]
 
   profile: {
-    address: {type:String},
+    address: { type: String },
     name: { type: String },
     age: { type: Number },
     image: { type: String },

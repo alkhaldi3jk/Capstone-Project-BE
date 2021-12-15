@@ -4,7 +4,7 @@ const User = require("../../db/models/User");
 
 exports.fetchRequestList = async (req, res, next) => {
   try {
-    const request = await Request.find().populate("options");
+    const request = await Request.find().populate("user");
     // .populate("service");
     res.status(200).json(request);
   } catch (error) {
@@ -14,7 +14,7 @@ exports.fetchRequestList = async (req, res, next) => {
 
 exports.fetchRequest = async (requestId, next) => {
   try {
-    const request = await Request.findById(requestId).populate("options");
+    const request = await Request.findById(requestId).populate("user");
     return request;
   } catch (error) {
     console.log(error);
@@ -22,7 +22,7 @@ exports.fetchRequest = async (requestId, next) => {
 };
 exports.requestOptionFetch = async (req, res, next) => {
   try {
-    res.status(200).json(req.Request).populate("options");
+    res.status(200).json(req.Request).populate("user");
   } catch (error) {
     console.log(error);
   }
@@ -39,8 +39,8 @@ exports.createRequest = async (req, res, next) => {
       {
         $push: { requests: newRequest._id },
       },
-      // { $set: { user: req.body } },
-      // { new: true, runValidators: true } // returns the updated profile
+      { $set: { user: req.body } },
+      { new: true, runValidators: true } // returns the updated profile
     );
     res.status(201).json(newRequest);
   } catch (error) {
@@ -93,7 +93,9 @@ exports.checkout = async (req, res, next) => {
     //     { $inc: { quantity: -item.quantity } }
     //   );
     // });
-    const newRequest = await Request.create(req.body)
+    const newRequest = await Request.create(req.body);
+
+    // await User.populate({path:"requests"});
     // .populate("option");
 
     res.status(201).json(newRequest);
