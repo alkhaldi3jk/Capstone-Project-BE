@@ -42,7 +42,9 @@ exports.createRequest = async (req, res, next) => {
       { $set: { user: req.body } },
       { new: true, runValidators: true } // returns the updated profile
     );
+
     res.status(201).json(newRequest);
+    console.log(newRequest);
   } catch (error) {
     console.log(error);
   }
@@ -85,20 +87,15 @@ exports.deleteRequest = async (req, res, next) => {
 exports.checkout = async (req, res, next) => {
   try {
     req.body.user = req.user._id;
-    // req.body.items.forEach(async (item) => {
-    //   const foundProduct = await Product.findById(item.product);
-    //   foundProduct.quantity = foundProduct - item.quantity;
-    //   const updatedItem = await Option.findByIdAndUpdate(
-    //     item.option,
-    //     { $inc: { quantity: -item.quantity } }
-    //   );
-    // });
-    const newRequest = await Request.create(req.body);
-
-    // await User.populate({path:"requests"});
-    // .populate("option");
+    
+    console.log(req.body);
+    const newRequest = await Request.create(req.body.option);
+    await User.findByIdAndUpdate(req.user._id, {
+      $push: { requests: newRequest },
+    });
 
     res.status(201).json(newRequest);
+    console.log("user",req.body.user.requests);
   } catch (error) {
     next(error);
   }
