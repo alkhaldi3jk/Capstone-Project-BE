@@ -10,7 +10,9 @@ const UserSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  request: [{ type: mongoose.Schema.Types.ObjectId, ref: "Request" }],
+
+  requests: [{ type: mongoose.Schema.Types.ObjectId, ref: "Request" }],
+
 
   profile: {
     address: { type: String },
