@@ -27,13 +27,13 @@ router.get("", fetchRequestList);
 
 router.get("/:requestId", requestOptionFetch);
 
-router.post(
+// router.post(
 
-  "",
+//   "",
 
-  passport.authenticate("jwt", { session: false }),
-  createRequest
-);
+//   passport.authenticate("jwt", { session: false }),
+//   createRequest
+// );
 
 router.put(
   "/:requestId",
